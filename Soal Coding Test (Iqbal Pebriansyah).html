@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coding test</title>
+</head>
+<body>
+
+    <h2>Masukkan Kalimat (hanya huruf dan spasi):</h2>
+    <input type="text" id="inputText" placeholder="Masukkan teks" />
+    <button onclick="prosesInput()">Proses</button>
+
+    <h3>Output:</h3>
+    <p id="output"></p>
+    <p id="output1"></p>
+    <p id="output2"></p>
+    <p id="output3"></p>
+    <p id="output4"></p>
+    <p id="output5"></p>
+    
+
+    <script>
+        function prosesInput() {
+            let input = document.getElementById("inputText").value;
+            const validasi = /^[a-zA-Z\s]*$/;
+
+            if (validasi.test(input)) {
+                let hasil = input.split('');
+                ubahdata(hasil);
+                document.getElementById("output").innerText = `Kata yang diinput : ${input}`;
+            
+                
+            } else {
+                document.getElementById("output").innerText = "Input hanya boleh berisi huruf dan spasi.";
+            }
+        }
+        function ubahdata(data){
+          let hasil = [];
+           for (let i = 0; i < data.length; i++) {
+                if (data[i] === 'A' || data[i] === 'v'|| data[i] === 'w'|| data[i] === 'x' || data[i] === 'y'|| data[i] === 'z'|| data[i] === ' ') {
+                     hasil.push(0);
+                }else if(data[i] === 'B' || data[i] === 'C'|| data[i] === 'D'|| data[i] === 'u') {
+                     hasil.push(1);
+                }else if(data[i] === 'E' || data[i] === 'p'|| data[i] === 'q'|| data[i] === 'r' || data[i] === 's' || data[i] === 't') {
+                     hasil.push(2);
+                }else if(data[i] === 'F' || data[i] === 'G'|| data[i] === 'H'|| data[i] === 'o') {
+                     hasil.push(3);
+                }else if(data[i] === 'I' || data[i] === 'j'|| data[i] === 'k'|| data[i] === 'l' || data[i] === 'm' || data[i] === 'n') {
+                     hasil.push(4);
+                }else if(data[i] === 'J' || data[i] === 'K'|| data[i] === 'L'|| data[i] === 'M' || data[i] === 'N' || data[i] === 'i') {
+                     hasil.push(5);
+                }else if(data[i] === 'O' || data[i] === 'f'|| data[i] === 'g'|| data[i] === 'h') {
+                     hasil.push(6);
+                }else if(data[i] === 'P' || data[i] === 'Q'|| data[i] === 'R'|| data[i] === 'S' || data[i] === 'T' || data[i] === 'e') {
+                     hasil.push(7);
+                }else if(data[i] === 'U' || data[i] === 'b'|| data[i] === 'c'|| data[i] === 'd') {
+                     hasil.push(8);
+                }else if(data[i] === 'V' || data[i] === 'W'|| data[i] === 'X'|| data[i] === 'Y' || data[i] === 'Z' || data[i] === 'a') {
+                     hasil.push(9);
+                }
+            }
+          jumlahangka(hasil);
+          document.getElementById('output1').innerText = `1. Ubahlah daftar kalimat di atas menjadi sebuah bilangan berdasarkan kamus yang telah diberikan. : ${hasil.join(' ')}`;
+        }
+        
+        function jumlahangka(data){
+          let hasil = 0;
+          let deretanAngka = [];  
+          
+          for (let i = 0; i < data.length; i++) {
+              if ((i+1) % 2 !== 0) { 
+                    if(i==0){
+                      hasil += data[i];  
+                      deretanAngka.push(`${data[i]}`); 
+                    }else{
+                      hasil -= data[i];  
+                      deretanAngka.push(`-${data[i]}`);  
+                    }
+              } else {  
+                  hasil += data[i]; 
+                  deretanAngka.push(`+${data[i]}`);  
+              }
+          }
+          let result = Math.abs(hasil); 
+          mengubahangka(result);
+          document.getElementById('output2').innerText = `2. Ubah, jumlah, dan kurangkan secara bergantian dari hasil konversi nomor 1. : ${deretanAngka.join('')} = ${hasil}`;
+          
+        }
+        
+        function mengubahangka(data){
+        
+        let sum = 0; 
+        const alphas = ["A", "B", "E", "F", "I", "J", "O", "P", "U", "V"];
+        let angka = []; 
+        let hasil = [];
+        let resultText = "";
+
+        let currLoopValue = 0;
+          while (data > 0) {
+            if (data >= sum && sum < 10) {
+              data -= sum;
+            } else {
+              sum = 0;
+            }
+
+            angka.push(sum);
+            sum += 1;
+          }
+
+          for (let i = 0; i < angka.length; i++) {
+            hasil.push(alphas[angka[i]]);
+          }
+
+        lastarray(angka);
+        document.getElementById('output3').innerText = `3. Konversikan hasil dari nomor 2 dan dikembalikan ke dalam bentuk abjad (huruf besar) sesuai kamus yang diberikan di atas. : ${hasil.join(' ')}`;
+          
+        }
+
+        function lastarray(data) {
+
+        let nestedArr = [];
+        let tempArr = [];
+        let hasil =[];
+        const alphas = ["A", "B", "E", "F", "I", "J", "O", "P", "U", "V"];
+
+        for (let i = 0; i < data.length; i++) {
+            if (data[i] === 0 && tempArr.length > 0) {
+                nestedArr.push(tempArr);
+                tempArr = [];  
+            }
+            tempArr.push(data[i]);  
+        }
+
+        nestedArr.push(tempArr);
+
+        if (nestedArr.length > 0) {
+            let lastSubArray = nestedArr[nestedArr.length - 1];
+            for(let i = 0; i < lastSubArray.length; i++) {
+              lastSubArray[i] += 1;
+            }
+        }
+
+        let flatArray = nestedArr.flat();
+
+
+        for (let i = 0; i < flatArray.length; i++) {
+            hasil.push(alphas[flatArray[i]]);
+          }
+
+        ganjil(flatArray);
+        document.getElementById('output4').innerText = `4. Konversikan hasil nomor 3 menjadi sample output seperti table di bawah. : ${hasil.join(' ')}`;
+    }
+
+
+        function ganjil(data) {
+
+        let nestedArr = [];
+        let tempArr = [];
+        let hasil =[];
+        
+        for (let i = 0; i < data.length; i++) {
+              if (data[i] % 2 !== 0) {  
+                    hasil.push(data[i]);
+              } else {  
+
+                    hasil.push(data[i]+1);
+              }
+          }
+
+
+        document.getElementById('output5').innerText = `5. Dari hasil nomor 4, silakan lakukan perubahan kembali menjadi sample output seperti table di bawah. : ${hasil.join(' ')}`;
+    }
+    </script>
+
+</body>
+</html>
